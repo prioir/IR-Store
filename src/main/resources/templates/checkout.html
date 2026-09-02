@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | IR Store</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        IR Store
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+
+        <a href="/products">Products</a>
+
+        <a href="/cart">Cart</a>
+
+        <a href="/cart/orders">My Orders</a>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="nav-logout">
+                Logout
+            </button>
+        </form>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= CHECKOUT ================= -->
+
+<section class="checkout-section">
+
+    <div class="checkout-container">
+
+        <p class="hero-small">
+            FINAL STEP
+        </p>
+
+        <h1>Checkout</h1>
+
+        <p th:if="${error}"
+           class="checkout-error"
+           th:text="${error}">
+        </p>
+
+        <p class="checkout-subtitle">
+            Review your order before confirming.
+        </p>
+
+
+        <!-- ================= ORDER SUMMARY ================= -->
+
+        <h2>Order Summary</h2>
+
+        <div class="checkout-items">
+
+            <div class="checkout-item"
+                 th:each="item : ${cartItems}">
+
+                <div>
+
+                    <p class="checkout-product-name"
+                       th:text="${item.product.name}">
+                        Product Name
+                    </p>
+
+                    <p class="checkout-item-details">
+
+                        Quantity:
+                        <span th:text="${item.quantity}">
+                            1
+                        </span>
+
+                        ×
+
+                        ৳
+                        <span th:text="${item.product.price}">
+                            0
+                        </span>
+
+                    </p>
+
+                </div>
+
+
+                <div class="checkout-item-price">
+
+                    ৳
+                    <span th:text="${item.product.price * item.quantity}">
+                        0
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= CHECKOUT FORM ================= -->
+
+        <form th:action="@{/cart/checkout}"
+              method="post"
+              id="checkoutForm">
+
+
+            <!-- ================= DELIVERY INFORMATION ================= -->
+
+            <h2>Delivery Information</h2>
+
+
+            <!-- Phone -->
+
+            <div class="checkout-form-group">
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input type="tel"
+                       id="phone"
+                       name="phone"
+                       placeholder="Enter your phone number"
+                       required>
+
+            </div>
+
+
+            <!-- Address -->
+
+            <div class="checkout-form-group">
+
+                <label for="address">
+                    Delivery Address
+                </label>
+
+                <textarea id="address"
+                          name="address"
+                          placeholder="Enter your full delivery address"
+                          rows="4"
+                          required></textarea>
+
+            </div>
+
+
+            <!-- City -->
+
+            <div class="checkout-form-group">
+
+                <label for="city">
+                    City
+                </label>
+
+                <input type="text"
+                       id="city"
+                       name="city"
+                       placeholder="Enter your city"
+                       required>
+
+            </div>
+
+
+            <!-- ================= PAYMENT METHOD ================= -->
+
+            <h2>Payment Method</h2>
+
+            <div class="payment-option">
+
+                <label>
+
+                    <input type="radio"
+                           name="paymentMethod"
+                           value="Cash on Delivery"
+                           checked>
+
+                    Cash on Delivery
+
+                </label>
+
+            </div>
+
+
+            <!-- ================= CONFIRM ORDER ================= -->
+
+            <button type="submit"
+                    class="place-order-btn">
+
+                Confirm Order
+
+            </button>
+
+        </form>
+
+
+        <!-- ================= BACK TO CART ================= -->
+
+        <a href="/cart"
+           class="back-cart-btn">
+
+            ← Back to Cart
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <h3>IR Store</h3>
+
+    <p>
+        Quality products. Simple shopping.
+    </p>
+
+    <p>
+        © 2026 IR Store. All rights reserved.
+    </p>
+
+</footer>
+
+
+<script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

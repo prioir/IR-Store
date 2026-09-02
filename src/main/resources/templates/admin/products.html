@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Products</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <!-- Header -->
+    <div class="admin-header">
+
+        <div>
+            <h1>Manage Products</h1>
+            <p>Add, edit and delete products</p>
+        </div>
+
+        <a href="/admin" class="back-btn">
+            Dashboard
+        </a>
+
+    </div>
+
+
+    <!-- Add / Edit Product -->
+
+    <div class="category-form">
+
+        <h2 th:text="${product.id == null ? 'Add Product' : 'Edit Product'}">
+            Add Product
+        </h2>
+
+        <form th:action="@{/admin/products/save}"
+              th:object="${product}"
+              method="post">
+
+            <!-- ID -->
+            <input type="hidden"
+                   th:field="*{id}">
+
+
+            <!-- Product Name -->
+
+            <input type="text"
+                   th:field="*{name}"
+                   placeholder="Product Name"
+                   required>
+
+
+            <!-- Price -->
+
+            <input type="number"
+                   th:field="*{price}"
+                   placeholder="Price"
+                   step="0.01"
+                   required>
+
+
+            <!-- Stock -->
+
+            <input type="number"
+                   th:field="*{stock}"
+                   placeholder="Stock"
+                   required>
+
+
+            <!-- Image -->
+
+            <div class="image-input-group">
+
+                <input type="text"
+                       th:field="*{image}"
+                       id="imageName"
+                       placeholder="Image name">
+
+                <button type="button"
+                        id="previewImageBtn">
+                    Preview
+                </button>
+
+            </div>
+
+            <div class="image-preview">
+                <img id="imagePreview"
+                     src=""
+                     alt="Image Preview"
+                     style="display: none;">
+            </div>
+
+
+            <!-- Category -->
+
+            <select th:field="*{category}" required>
+
+                <option value="">
+                    Select Category
+                </option>
+
+                <option th:each="cat : ${categories}"
+                        th:value="${cat.id}"
+                        th:text="${cat.name}">
+                </option>
+
+            </select>
+
+
+            <!-- Submit -->
+
+            <button type="submit"
+                    th:text="${product.id == null ? 'Add Product' : 'Update Product'}">
+
+                Add Product
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Product List -->
+
+    <div class="category-list">
+
+        <h2>All Products</h2>
+
+        <table border="1">
+
+            <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Name</th>
+
+                <th>Price</th>
+
+                <th>Stock</th>
+
+                <th>Category</th>
+
+                <th>Image</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            <tr th:each="prod : ${products}">
+
+                <td th:text="${prod.id}">
+                    1
+                </td>
+
+
+                <td th:text="${prod.name}">
+                    Product
+                </td>
+
+
+                <td th:text="${prod.price}">
+                    100
+                </td>
+
+
+                <td th:text="${prod.stock}">
+                    10
+                </td>
+
+
+                <td th:text="${prod.category.name}">
+                    Electronics
+                </td>
+
+
+                <td th:text="${prod.image}">
+                    product.jpg
+                </td>
+
+
+                <td>
+
+                    <a th:href="@{/admin/products/edit/{id}(id=${prod.id})}"
+                       class="edit-btn">
+
+                        Edit
+
+                    </a>
+
+
+                    <a th:href="@{/admin/products/delete/{id}(id=${prod.id})}"
+                       class="delete-btn"
+                       onclick="return confirm('Are you sure you want to delete this product?');">
+
+                        Delete
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+
+        <div th:if="${#lists.isEmpty(products)}"
+             class="empty-message">
+
+            <p>No products found.</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

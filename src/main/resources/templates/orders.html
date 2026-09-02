@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders | IR Store</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        IR Store
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+
+        <a href="/products">Products</a>
+
+        <a href="/cart">Cart</a>
+
+        <a href="/cart/orders">My Orders</a>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="nav-logout">
+                Logout
+            </button>
+        </form>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= MY ORDERS ================= -->
+
+<section class="section orders-section">
+
+    <div class="section-title">
+
+        <p class="hero-small">
+            ORDER HISTORY
+        </p>
+
+        <h1>My Orders</h1>
+
+    </div>
+
+
+    <!-- Empty Orders -->
+
+    <div class="empty-orders"
+         th:if="${#lists.isEmpty(orders)}">
+
+        <h2>No Orders Yet</h2>
+
+        <p>
+            You have not placed any orders yet.
+        </p>
+
+        <a href="/products" class="hero-btn">
+            Start Shopping
+        </a>
+
+    </div>
+
+
+    <!-- Orders Table -->
+
+    <div class="orders-container"
+         th:if="${!#lists.isEmpty(orders)}">
+
+        <div class="orders-table-wrapper">
+
+            <table class="orders-table">
+
+                <thead>
+
+                <tr>
+                    <th>Order ID</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Order Date</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Payment</th>
+                    <th>Payment Status</th>
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="order : ${orders}">
+
+                    <td class="order-id"
+                        th:text="${order.id}">
+                        1
+                    </td>
+
+                    <td class="order-price">
+
+                        ৳ <span th:text="${order.totalPrice}">
+                            0
+                        </span>
+
+                    </td>
+
+                    <td>
+
+    <span class="order-status"
+          th:classappend="${order.status == 'PLACED'} ? ' status-placed' :
+                          (${order.status == 'CONFIRMED'} ? ' status-confirmed' :
+                          (${order.status == 'SHIPPED'} ? ' status-shipped' :
+                          (${order.status == 'DELIVERED'} ? ' status-delivered' : '')))"
+          th:text="${order.status}">
+        PLACED
+    </span>
+
+                    </td>
+
+                    <td th:text="${order.orderDate}">
+                        Date
+                    </td>
+
+                    <td th:text="${order.phone}">
+                        Phone
+                    </td>
+
+                    <td th:text="${order.address}">
+                        Address
+                    </td>
+
+                    <td th:text="${order.city}">
+                        City
+                    </td>
+
+                    <td th:text="${order.paymentMethod}">
+                        Cash on Delivery
+                    </td>
+
+                    <td>
+    <span class="payment-status"
+          th:text="${order.paymentStatus}">
+        UNPAID
+    </span>
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Bottom Actions -->
+
+        <div class="orders-actions">
+
+            <a href="/" class="continue-btn">
+                Home
+            </a>
+
+            <a href="/products" class="checkout-btn">
+                Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <h3>IR Store</h3>
+
+    <p>
+        Quality products. Simple shopping.
+    </p>
+
+    <p>
+        © 2026 IR Store. All rights reserved.
+    </p>
+
+</footer>
+
+
+</body>
+</html>

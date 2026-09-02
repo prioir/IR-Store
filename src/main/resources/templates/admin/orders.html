@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Orders</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <div class="admin-header">
+        <div>
+            <h1>Orders</h1>
+            <p>View all customer orders</p>
+        </div>
+
+        <a href="/admin" class="back-btn">Dashboard</a>
+    </div>
+
+
+    <div class="order-table">
+
+        <h2>All Orders</h2>
+
+        <table border="1">
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Total</th>
+                <th>Payment</th>
+                <th>Payment Status</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="order : ${orders}">
+
+                <td th:text="${order.id}">1</td>
+
+                <td th:text="${order.user != null ? order.user.name : 'Unknown'}">
+                    Customer
+                </td>
+
+                <td th:text="${order.phone}">
+                    Phone
+                </td>
+
+                <td th:text="${order.address}">
+                    Address
+                </td>
+
+                <td th:text="${order.city}">
+                    City
+                </td>
+
+                <td th:text="${order.totalPrice}">
+                    1000
+                </td>
+
+                <td th:text="${order.paymentMethod}">
+                    Cash on Delivery
+                </td>
+
+                <td>
+
+                    <form th:action="@{/admin/orders/update-payment/{id}(id=${order.id})}"
+                          method="post">
+
+                        <select name="paymentStatus">
+
+                            <option value="UNPAID"
+                                    th:selected="${order.paymentStatus == 'UNPAID'}">
+                                UNPAID
+                            </option>
+
+                            <option value="PAID"
+                                    th:selected="${order.paymentStatus == 'PAID'}">
+                                PAID
+                            </option>
+
+                        </select>
+
+                        <button type="submit">
+                            Update
+                        </button>
+
+                    </form>
+
+                </td>
+
+                <td>
+
+                    <form th:action="@{/admin/orders/update-status/{id}(id=${order.id})}"
+                          method="post">
+
+                        <select name="status">
+
+                            <option value="PLACED"
+                                    th:selected="${order.status == 'PLACED'}">
+                                PLACED
+                            </option>
+
+                            <option value="CONFIRMED"
+                                    th:selected="${order.status == 'CONFIRMED'}">
+                                CONFIRMED
+                            </option>
+
+                            <option value="SHIPPED"
+                                    th:selected="${order.status == 'SHIPPED'}">
+                                SHIPPED
+                            </option>
+
+                            <option value="DELIVERED"
+                                    th:selected="${order.status == 'DELIVERED'}">
+                                DELIVERED
+                            </option>
+
+                        </select>
+
+                        <button type="submit">
+                            Update
+                        </button>
+
+                    </form>
+
+                </td>
+
+                <td th:text="${order.orderDate}">
+                    Date
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+
+        <div th:if="${#lists.isEmpty(orders)}"
+             class="empty-message">
+
+            <p>No orders found.</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

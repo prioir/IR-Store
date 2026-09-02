@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Confirmed | IR Store</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        IR Store
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+
+        <a href="/products">Products</a>
+
+        <a href="/cart">Cart</a>
+
+        <a href="/cart/orders">My Orders</a>
+
+        <form th:action="@{/logout}" method="post">
+
+            <button type="submit"
+                    class="nav-logout">
+
+                Logout
+
+            </button>
+
+        </form>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= CONFIRMATION ================= -->
+
+<section class="checkout-section">
+
+    <div class="checkout-container order-confirmation">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <p class="hero-small">
+            ORDER SUCCESSFUL
+        </p>
+
+        <h1>Order Confirmed!</h1>
+
+        <p class="checkout-subtitle">
+
+            Thank you for shopping with IR Store.
+            Your order has been successfully placed.
+
+        </p>
+
+
+        <!-- ================= ORDER DETAILS ================= -->
+
+        <div class="confirmation-card">
+
+            <h2>Order Details</h2>
+
+            <div class="confirmation-row">
+
+                <span>Order ID</span>
+
+                <strong th:text="${order.id}">
+                    1
+                </strong>
+
+            </div>
+
+
+            <div class="confirmation-row">
+
+                <span>Total Amount</span>
+
+                <strong>
+
+                    ৳
+                    <span th:text="${order.totalPrice}">
+                        0
+                    </span>
+
+                </strong>
+
+            </div>
+
+
+            <div class="confirmation-row">
+
+                <span>Order Status</span>
+
+                <strong th:text="${order.status}">
+                    PLACED
+                </strong>
+
+            </div>
+
+
+            <div class="confirmation-row">
+
+                <span>Payment Method</span>
+
+                <strong th:text="${order.paymentMethod}">
+                    Cash on Delivery
+                </strong>
+
+            </div>
+
+
+            <div class="confirmation-row">
+
+                <span>Payment Status</span>
+
+                <strong th:text="${order.paymentStatus}">
+                    UNPAID
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= DELIVERY ================= -->
+
+        <div class="confirmation-card">
+
+            <h2>Delivery Information</h2>
+
+
+            <div class="confirmation-row">
+
+                <span>Phone</span>
+
+                <strong th:text="${order.phone}">
+                    Phone
+                </strong>
+
+            </div>
+
+
+            <div class="confirmation-row">
+
+                <span>Address</span>
+
+                <strong th:text="${order.address}">
+                    Address
+                </strong>
+
+            </div>
+
+
+            <div class="confirmation-row">
+
+                <span>City</span>
+
+                <strong th:text="${order.city}">
+                    City
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= ACTIONS ================= -->
+
+        <div class="confirmation-actions">
+
+            <a href="/cart/orders"
+               class="checkout-btn">
+
+                View My Orders
+
+            </a>
+
+
+            <a href="/products"
+               class="continue-btn">
+
+                Continue Shopping
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <h3>IR Store</h3>
+
+    <p>
+        Quality products. Simple shopping.
+    </p>
+
+    <p>
+        © 2026 IR Store. All rights reserved.
+    </p>
+
+</footer>
+
+
+</body>
+</html>

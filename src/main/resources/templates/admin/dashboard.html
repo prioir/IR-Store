@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | IR Store</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+
+<!-- ================= ADMIN NAVBAR ================= -->
+
+<nav class="admin-navbar">
+
+    <div class="admin-logo">
+        IR Store <span>| Admin Panel</span>
+    </div>
+
+    <div class="admin-nav-links">
+
+        <a href="/admin">Dashboard</a>
+
+        <a href="/admin/categories">Categories</a>
+
+        <a href="/admin/products">Products</a>
+
+        <a href="/admin/orders">Orders</a>
+
+        <form th:action="@{/logout}" method="post">
+
+            <button type="submit" class="admin-logout">
+                Logout
+            </button>
+
+        </form>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<section class="admin-container">
+
+    <div class="admin-header">
+
+        <p class="admin-small-title">
+            ADMIN PANEL
+        </p>
+
+        <h1>Dashboard</h1>
+
+        <span>
+            Manage your store from one place.
+        </span>
+
+    </div>
+
+
+    <!-- Dashboard Cards -->
+
+    <div class="admin-grid">
+
+        <!-- Categories -->
+
+        <a href="/admin/categories" class="admin-card">
+
+            <div class="admin-icon">
+                📂
+            </div>
+
+            <h2>Categories</h2>
+
+            <p>
+                Add, edit and delete product categories.
+            </p>
+
+            <span class="admin-card-link">
+                Manage Categories →
+            </span>
+
+        </a>
+
+
+        <!-- Products -->
+
+        <a href="/admin/products" class="admin-card">
+
+            <div class="admin-icon">
+                🛍️
+            </div>
+
+            <h2>Products</h2>
+
+            <p>
+                Add, edit and manage your store products.
+            </p>
+
+            <span class="admin-card-link">
+                Manage Products →
+            </span>
+
+        </a>
+
+
+        <!-- Orders -->
+
+        <a href="/admin/orders" class="admin-card">
+
+            <div class="admin-icon">
+                📦
+            </div>
+
+            <h2>Orders</h2>
+
+            <p>
+                View and manage customer orders.
+            </p>
+
+            <span class="admin-card-link">
+                View Orders →
+            </span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <h3>IR Store Admin</h3>
+
+    <p>
+        Manage your store easily.
+    </p>
+
+    <p>
+        © 2026 IR Store. All rights reserved.
+    </p>
+
+</footer>
+
+</body>
+</html>

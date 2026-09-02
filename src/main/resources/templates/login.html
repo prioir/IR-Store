@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | IR Store</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="auth-container">
+
+    <div class="auth-box">
+
+        <div class="auth-logo">
+            IR Store
+        </div>
+
+        <h1>Welcome Back</h1>
+
+        <p class="auth-subtitle">
+            Login to continue shopping
+        </p>
+
+        <form th:action="@{/login}" method="post" id="loginForm">
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input type="email"
+                       id="email"
+                       name="email"
+                       placeholder="Enter your email"
+                       required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="password-wrapper">
+
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           placeholder="Enter your password"
+                           required>
+
+                    <button type="button"
+                            id="togglePassword"
+                            class="password-toggle">
+                        Show
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button type="submit" class="auth-btn">
+                Login
+            </button>
+
+        </form>
+
+
+        <!-- Login Error -->
+
+        <p th:if="${param.error}"
+           class="auth-error">
+
+            Invalid email or password!
+
+        </p>
+
+
+        <!-- Logout Message -->
+
+        <p th:if="${param.logout}"
+           class="auth-success">
+
+            You have been logged out.
+
+        </p>
+
+
+        <p class="auth-footer">
+
+            Don't have an account?
+
+            <a href="/register">
+                Register
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

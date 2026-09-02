@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IR E-Commerce</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        IR Store
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+
+        <a href="/products">Products</a>
+
+        <a href="/cart">Cart</a>
+
+        <a href="/cart/orders">My Orders</a>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="nav-logout">
+                Logout
+            </button>
+        </form>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="hero-small">
+            WELCOME TO IR STORE
+        </p>
+
+        <h1>
+            Shop Smart.<br>
+            Live Better.
+        </h1>
+
+        <p>
+            Discover quality products at the best prices.
+        </p>
+
+        <a href="#products" class="hero-btn">
+            Shop Now
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CATEGORIES ================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <p class="hero-small">
+            EXPLORE
+        </p>
+
+        <h2>Categories</h2>
+
+    </div>
+
+    <div class="category-grid">
+
+        <div class="category-card"
+             th:each="category : ${categories}"
+             th:attr="data-category=${category.name}">
+
+            <h3 th:text="${category.name}">
+                Category
+            </h3>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PRODUCTS ================= -->
+
+<section class="section" id="products">
+
+    <div class="section-title">
+
+        <p class="hero-small">
+            OUR COLLECTION
+        </p>
+
+        <div class="product-search">
+
+            <input type="text"
+                   id="productSearch"
+                   placeholder="Search products...">
+
+        </div>
+
+        <h2>Featured Products</h2>
+
+    </div>
+
+
+    <div class="product-grid">
+
+        <div class="product-card"
+             th:each="product : ${products}"
+             th:attr="data-category=${product.category.name}">
+
+
+            <!-- Product Image -->
+
+            <div class="product-image">
+
+                <img th:if="${product.image != null and product.image != ''}"
+                     th:src="@{'/images/products/' + ${product.image}}"
+                     th:alt="${product.name}">
+
+                <div class="no-image"
+                     th:if="${product.image == null or product.image == ''}">
+
+                    No Image
+
+                </div>
+
+            </div>
+
+
+            <!-- Product Information -->
+
+            <div class="product-info">
+
+                <p class="product-category"
+                   th:text="${product.category.name}">
+                    Category
+                </p>
+
+                <h3 th:text="${product.name}">
+                    Product Name
+                </h3>
+
+                <p class="product-price">
+
+                    ৳ <span th:text="${product.price}">
+                        0
+                    </span>
+
+                </p>
+
+
+                <!-- Actions -->
+
+                <div class="product-actions">
+
+                    <a class="details-btn"
+                       th:href="@{/products/{id}(id=${product.id})}">
+
+                        View Details
+
+                    </a>
+
+
+                    <form th:if="${product.stock > 0}"
+                          th:action="@{/cart/add/{id}(id=${product.id})}"
+                          method="post">
+
+                        <button type="submit"
+                                class="cart-btn">
+
+                            Add to Cart
+
+                        </button>
+
+                    </form>
+
+                    <button th:if="${product.stock <= 0}"
+                            class="cart-btn disabled"
+                            disabled>
+
+                        Out of Stock
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <h3>IR Store</h3>
+
+    <p>
+        Quality products. Simple shopping.
+    </p>
+
+    <p>
+        © 2026 IR Store. All rights reserved.
+    </p>
+
+</footer>
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>
+

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Products | IR Store</title>
+
+    <link rel="stylesheet" th:href="@{/css/products.css}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        IR Store
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+
+        <a href="/cart">Cart</a>
+
+        <a href="/cart/orders">My Orders</a>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">
+                Logout
+            </button>
+        </form>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= PAGE HEADER ================= -->
+
+<section class="page-header">
+
+    <p>IR STORE</p>
+
+    <h1>All Products</h1>
+
+    <span>Explore our collection and find something you love.</span>
+
+</section>
+
+
+<!-- ================= PRODUCTS ================= -->
+
+<section class="products-section">
+
+    <div class="product-grid">
+
+        <div class="product-card"
+             th:each="product : ${products}">
+
+            <!-- IMAGE -->
+
+            <div class="product-image">
+
+                <img th:if="${product.image != null and product.image != ''}"
+                     th:src="@{'/images/products/' + ${product.image}}"
+                     th:alt="${product.name}">
+
+                <div class="no-image"
+                     th:if="${product.image == null or product.image == ''}">
+
+                    No Image
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT INFO -->
+
+            <div class="product-info">
+
+                <p class="product-category"
+                   th:text="${product.category.name}">
+                    Category
+                </p>
+
+                <h2 th:text="${product.name}">
+                    Product Name
+                </h2>
+
+                <p class="price">
+                    ৳ <span th:text="${product.price}">0</span>
+                </p>
+
+
+                <!-- STOCK -->
+
+                <p class="stock"
+                   th:classappend="${product.stock > 0} ? 'available' : 'out-of-stock'">
+
+                    <span th:if="${product.stock > 0}">
+                        In Stock: <span th:text="${product.stock}"></span>
+                    </span>
+
+                    <span th:if="${product.stock <= 0}">
+                        Out of Stock
+                    </span>
+
+                </p>
+
+
+                <!-- ACTIONS -->
+
+                <div class="product-actions">
+
+                    <a class="details-btn"
+                       th:href="@{/products/{id}(id=${product.id})}">
+
+                        View Details
+
+                    </a>
+
+
+                    <form th:if="${product.stock > 0}"
+                          th:action="@{/cart/add/{id}(id=${product.id})}"
+                          method="post">
+
+                        <button type="submit"
+                                class="cart-btn">
+
+                            Add to Cart
+
+                        </button>
+
+                    </form>
+
+                    <button th:if="${product.stock <= 0}"
+                            class="cart-btn disabled"
+                            disabled>
+
+                        Out of Stock
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- EMPTY PRODUCTS -->
+
+    <div class="empty-products"
+         th:if="${#lists.isEmpty(products)}">
+
+        <h2>No Products Found</h2>
+
+        <p>There are currently no products available.</p>
+
+        <a href="/" class="back-home">
+            Back to Home
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <h3>IR Store</h3>
+
+    <p>
+        Quality products. Simple shopping.
+    </p>
+
+    <p>
+        © 2026 IR Store. All rights reserved.
+    </p>
+
+</footer>
+
+</body>
+</html>

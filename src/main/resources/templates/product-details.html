@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${product.name}">Product Details</title>
+
+    <link rel="stylesheet" th:href="@{/css/product-details.css}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        IR Store
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/">Home</a>
+
+        <a href="/products">Products</a>
+
+        <a href="/cart">Cart</a>
+
+        <a href="/cart/orders">My Orders</a>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">
+                Logout
+            </button>
+        </form>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= PRODUCT DETAILS ================= -->
+
+<section class="details-section">
+
+    <div class="product-details-card">
+
+        <!-- IMAGE -->
+
+        <div class="details-image">
+
+            <img th:if="${product.image != null and product.image != ''}"
+                 th:src="@{'/images/products/' + ${product.image}}"
+                 th:alt="${product.name}">
+
+            <div class="no-image"
+                 th:if="${product.image == null or product.image == ''}">
+
+                No Image
+
+            </div>
+
+        </div>
+
+
+        <!-- INFORMATION -->
+
+        <div class="details-info">
+
+            <p class="category"
+               th:text="${product.category.name}">
+                Category
+            </p>
+
+            <h1 th:text="${product.name}">
+                Product Name
+            </h1>
+
+            <p class="price">
+                ৳ <span th:text="${product.price}">0</span>
+            </p>
+
+
+            <!-- STOCK -->
+
+            <div class="stock available"
+                 th:if="${product.stock > 0}">
+
+                ✓ In Stock
+                <span th:text="${product.stock}"></span>
+                available
+
+            </div>
+
+            <div class="stock unavailable"
+                 th:if="${product.stock <= 0}">
+
+                ✕ Out of Stock
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+                <form th:if="${product.stock > 0}"
+                      th:action="@{/cart/add/{id}(id=${product.id})}"
+                      method="post">
+
+                    <button type="submit" class="cart-btn">
+                        Add to Cart
+                    </button>
+
+                </form>
+
+                <button th:if="${product.stock <= 0}"
+                        class="cart-btn disabled"
+                        disabled>
+
+                    Out of Stock
+
+                </button>
+
+                <a href="/products" class="back-btn">
+                    Back to Products
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <h3>IR Store</h3>
+
+    <p>
+        Quality products. Simple shopping.
+    </p>
+
+    <p>
+        © 2026 IR Store. All rights reserved.
+    </p>
+
+</footer>
+
+
+</body>
+</html>

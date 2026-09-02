@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register | IR Store</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="auth-container">
+
+    <div class="auth-box">
+
+        <div class="auth-logo">
+            IR Store
+        </div>
+
+        <h1>Create Account</h1>
+
+        <p class="auth-subtitle">
+            Create your account and start shopping
+        </p>
+
+
+        <form th:action="@{/register}"
+              method="post" id="registerForm">
+
+            <!-- Name -->
+
+            <div class="form-group">
+
+                <label for="name">
+                    Full Name
+                </label>
+
+                <input type="text"
+                       id="name"
+                       name="name"
+                       placeholder="Enter your full name"
+                       required>
+
+            </div>
+
+
+            <!-- Email -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input type="email"
+                       id="email"
+                       name="email"
+                       placeholder="Enter your email"
+                       required>
+
+            </div>
+
+
+            <!-- Password -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input type="password"
+                       id="password"
+                       name="password"
+                       placeholder="Create a password"
+                       required>
+
+            </div>
+
+
+            <!-- Register -->
+
+            <button type="submit"
+                    class="auth-btn">
+
+                Create Account
+
+            </button>
+
+        </form>
+
+
+        <p class="auth-footer">
+
+            Already have an account?
+
+            <a href="/login">
+                Login
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
