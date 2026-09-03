@@ -37,11 +37,14 @@
             Add Product
         </h2>
 
+
         <form th:action="@{/admin/products/save}"
               th:object="${product}"
-              method="post">
+              method="post"
+              enctype="multipart/form-data">
 
             <!-- ID -->
+
             <input type="hidden"
                    th:field="*{id}">
 
@@ -71,33 +74,82 @@
                    required>
 
 
-            <!-- Image -->
+            <!-- IMAGE -->
 
-            <div class="image-input-group">
+            <div class="image-upload-box">
 
-                <input type="text"
-                       th:field="*{image}"
-                       id="imageName"
-                       placeholder="Image name">
+                <h3>Product Image</h3>
+
+                <!-- File Upload -->
+
+                <label for="imageFile">
+                    Upload Image From Computer
+                </label>
+
+                <input type="file"
+                       name="imageFile"
+                       id="imageFile"
+                       accept="image/*">
+
+
+                <div class="or-text">
+                    OR
+                </div>
+
+
+                <!-- Image URL -->
+
+                <label for="imageUrl">
+                    Image URL
+                </label>
+
+                <input type="url"
+                       name="imageUrl"
+                       id="imageUrl"
+                       placeholder="https://example.com/product.jpg">
+
+
+                <!-- Preview Button -->
 
                 <button type="button"
-                        id="previewImageBtn">
-                    Preview
+                        id="previewImageBtn"
+                        class="preview-btn">
+
+                    Preview Image
+
                 </button>
+
+
+                <!-- Image Preview -->
+
+                <div class="image-preview">
+
+                    <img id="imagePreview"
+                         alt="Image Preview"
+                         style="display:none;">
+
+                </div>
 
             </div>
 
-            <div class="image-preview">
-                <img id="imagePreview"
-                     src=""
-                     alt="Image Preview"
-                     style="display: none;">
+
+            <!-- Existing Image -->
+
+            <div th:if="${product.image != null and !#strings.isEmpty(product.image)}"
+                 class="current-image">
+
+                <p>Current Image:</p>
+
+                <img th:src="${product.image}"
+                     alt="Current Product Image">
+
             </div>
 
 
             <!-- Category -->
 
-            <select th:field="*{category}" required>
+            <select th:field="*{category}"
+                    required>
 
                 <option value="">
                     Select Category
@@ -130,6 +182,7 @@
     <div class="category-list">
 
         <h2>All Products</h2>
+
 
         <table border="1">
 
@@ -185,10 +238,23 @@
                 </td>
 
 
-                <td th:text="${prod.image}">
-                    product.jpg
+                <!-- Product Image -->
+
+                <td>
+
+                    <img th:if="${prod.image != null and !#strings.isEmpty(prod.image)}"
+                         th:src="${prod.image}"
+                         alt="Product Image"
+                         class="product-table-image">
+
+                    <span th:if="${prod.image == null or #strings.isEmpty(prod.image)}">
+                        No Image
+                    </span>
+
                 </td>
 
+
+                <!-- Actions -->
 
                 <td>
 
@@ -228,6 +294,106 @@
 
 </div>
 
-<script th:src="@{/js/script.js}"></script>
+
+<script>
+
+    const imageFile =
+        document.getElementById("imageFile");
+
+    const imageUrl =
+        document.getElementById("imageUrl");
+
+    const previewButton =
+        document.getElementById("previewImageBtn");
+
+    const imagePreview =
+        document.getElementById("imagePreview");
+
+
+    /*
+     * File Preview
+     */
+
+    imageFile.addEventListener("change", function () {
+
+        const file = this.files[0];
+
+        if (file) {
+
+            const reader =
+                new FileReader();
+
+            reader.onload = function (event) {
+
+                imagePreview.src =
+                    event.target.result;
+
+                imagePreview.style.display =
+                    "block";
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+
+    /*
+     * URL Preview
+     */
+
+    previewButton.addEventListener("click", function () {
+
+        const url =
+            imageUrl.value.trim();
+
+        if (url) {
+
+            imagePreview.src = url;
+
+            imagePreview.style.display =
+                "block";
+
+        } else {
+
+            alert("Please upload an image or enter an image URL.");
+
+        }
+
+    });
+
+
+    /*
+     * If URL is entered,
+     * clear file selection.
+     */
+
+    imageUrl.addEventListener("input", function () {
+
+        if (this.value.trim() !== "") {
+
+            imageFile.value = "";
+
+        }
+
+    });
+
+
+    /*
+     * If file is selected,
+     * clear URL.
+     */
+
+    imageFile.addEventListener("change", function () {
+
+        if (this.files.length > 0) {
+
+            imageUrl.value = "";
+
+        }
+
+    });
+
+</script>
+
 </body>
 </html>
